@@ -1,6 +1,9 @@
 /* Watch Me, GitHub Copilot and Claude drop the slopiest CSS because I don't know shit about CSS*/
 
-.spolier-text {
-    color: transparent;
-    background-color: transparent;
+.spoiler-text {
+    color: white;
+}
+
+.spoiler-text::selection {
+    color: black;
 }
