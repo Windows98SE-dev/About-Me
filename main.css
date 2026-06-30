@@ -1,9 +1,210 @@
 /* Watch Me, GitHub Copilot and Claude drop the slopiest CSS because I don't know shit about CSS*/
+/* Watch Me, GitHub Copilot and Claude drop the slopiest CSS because I don't know shit about CSS */
 
-.spoiler-text {
-    color: white;
+/* =============================================
+   PALETTE — change these vars to reskin everything
+   ============================================= */
+:root {
+    --desktop-bg:  #008080;  /* Classic teal desktop */
+    --window-bg:   #d4d0c8;  /* Window chrome gray   */
+    --content-bg:  #ffffff;  /* Content area          */
+    --titlebar:    #000080;  /* Title bar dark blue   */
+    --title-text:  #ffffff;
+    --text:        #000000;
+    --link:        #0000cc;
+    --link-visited:#551a8b;
+    --hi:          #ffffff;  /* 3D border highlight   */
+    --lo:          #000000;  /* 3D border shadow      */
+    --hi2:         #dfdfdf;
+    --lo2:         #808080;
 }
 
-.spoiler-text::selection {
-    color: black;
+/* =============================================
+   RESET
+   ============================================= */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* =============================================
+   BASE
+   ============================================= */
+body {
+    background-color: var(--desktop-bg);
+    font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
+    font-size: 11px;
+    color: var(--text);
+    min-height: 100vh;
+    /* min-width: 920px;  ← supprime cette ligne */
+}
+
+/* =============================================
+   DESKTOP CANVAS
+   position: relative  →  anchor for all windows
+   ============================================= */
+.desktop {
+    position: relative;
+    width: 880px;
+    min-height: 700px;
+    margin: 30px auto 50px;
+}
+
+/* =============================================
+   WINDOW
+   position: absolute  →  place freely via style=""
+   ============================================= */
+.window {
+    position: absolute;
+    background-color: var(--window-bg);
+    padding: 2px;
+    /* Classic Windows 98 3D raised border */
+    box-shadow:
+        inset  1px  1px 0 var(--hi),
+        inset -1px -1px 0 var(--lo),
+        inset  2px  2px 0 var(--hi2),
+        inset -2px -2px 0 var(--lo2);
+}
+
+/* =============================================
+   TITLE BAR
+   ============================================= */
+.titlebar {
+    height: 18px;
+    background-color: var(--titlebar);
+    color: var(--title-text);
+    font-weight: bold;
+    font-size: 11px;
+    padding: 1px 2px 1px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+}
+
+.titlebar > span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.titlebar-icon {
+    font-size: 12px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+/* Thin gap between titlebar and content */
+.window-sep {
+    height: 2px;
+    background: var(--window-bg);
+}
+
+/* ─── Titlebar buttons ─── */
+.titlebar-buttons {
+    display: flex;
+    gap: 2px;
+    flex-shrink: 0;
+    margin-left: 4px;
+}
+
+.titlebar-buttons button {
+    width: 16px;
+    height: 14px;
+    font-size: 8px;
+    font-family: inherit;
+    background: var(--window-bg);
+    color: var(--text);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        inset  1px  1px 0 var(--hi),
+        inset -1px -1px 0 var(--lo),
+        inset  2px  2px 0 var(--hi2),
+        inset -2px -2px 0 var(--lo2);
+}
+
+.titlebar-buttons button:active {
+    box-shadow:
+        inset -1px -1px 0 var(--hi),
+        inset  1px  1px 0 var(--lo);
+    padding: 1px 0 0 1px;
+}
+
+/* =============================================
+   CONTENT AREA
+   ============================================= */
+.content {
+    background-color: var(--content-bg);
+    padding: 8px 10px;
+}
+
+.content p {
+    line-height: 1.6;
+    margin-bottom: 4px;
+}
+
+.content p:last-child {
+    margin-bottom: 0;
+}
+
+.content ul {
+    padding-left: 18px;
+    list-style-type: disc;
+}
+
+.content li {
+    line-height: 1.65;
+}
+
+.content a {
+    color: var(--link);
+}
+
+.content a:visited {
+    color: var(--link-visited);
+}
+
+.content del {
+    color: var(--lo2);
+}
+
+/* =============================================
+   SPOILER TEXT
+   — invisible until you highlight it
+   ============================================= */
+/* AVANT (cassé) */
+.spoiler-text {
+    color: var(--content-bg);
+    background-color: var(--content-bg); /* ← ça couvre la sélection */
+}
+
+/* APRÈS (correct) */
+.spoiler-text {
+    color: var(--content-bg);
+}
+
+@media (max-width: 900px) {
+    .desktop {
+        position: static;
+        width: 100%;
+        min-height: unset;
+        margin: 0;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .window {
+        position: static;
+        width: 100% !important; /* override les width inline dans le HTML */
+    }
 }
