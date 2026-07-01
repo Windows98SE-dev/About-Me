@@ -1,0 +1,11 @@
+/* Rectangle 3 */
+
+position: absolute;
+width: 155px;
+height: 85px;
+
+background: linear-gradient(180deg, #343434 0%, #1F1F1F 50%, #3D3D3D 100%);
+box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3), inset 0px -2px 1px rgba(0, 0, 0, 0.4), inset 0px 2px 4px rgba(255, 255, 255, 0.3);
+border-radius: 15px;
+
+/*Add appropriately sized text and apply a subtle drop shadow on the text in order to make it appear “debossed” into the button. The Normal state of the button is now complete.*/
