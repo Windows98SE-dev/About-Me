@@ -1,55 +1,49 @@
-/*Yes the CSS is slopified, but I don't understand shit at CSS so I gotta do with what I have in my hands*/
-
-
-/* ═══════════════════════════════════════════════════
-   FRUTIGER AERO — glass, gradients, sky vibes
-   ═══════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════
+   FRUTIGER AERO — Frutiger Aero Archive tutorials
+   Tile  : #314DFF → #00D9FF  (aero_tile.css)
+   Button: #343434 → #1F1F1F  (aero_button.css)
+   ════════════════════════════════════════════════════════ */
 
 :root {
-    /* Sky palette */
-    --sky-top:        #b8e4f9;
-    --sky-bottom:     #1e6fa8;
+    /* ── aero_tile.css ── */
+    --tile-top:    #314DFF;
+    --tile-bottom: #00D9FF;
+    --tile-border: rgba(0, 0, 0, 0.2);
+    --gloss-hi:    rgba(217, 217, 217, 0.50);   /* Ellipse 1 top  */
+    --gloss-lo:    rgba(115, 115, 115, 0.04);   /* Ellipse 1 fade */
 
-    /* Window glass */
-    --window-glass:   rgba(255, 255, 255, 0.72);
-    --window-border:  rgba(255, 255, 255, 0.80);
-    --content-bg:     rgba(255, 255, 255, 0.93);
+    /* ── aero_button.css ── */
+    --btn-top: #343434;
+    --btn-mid: #1F1F1F;
+    --btn-bot: #3D3D3D;
 
-    /* Titlebar — classic Aero gloss (4-stop gradient) */
-    --bar-hi:         #d0edff;
-    --bar-mid-hi:     #56b6e8;
-    --bar-mid-lo:     #1a85cc;
-    --bar-lo:         #70c5f0;
+    /* ── desktop background ── */
+    --sky-top:    #b0dfff;
+    --sky-bottom: #1a6eb5;
 
-    /* Text */
-    --title-text:     #ffffff;
-    --text:           #1b3a50;
-    --link:           #0055cc;
-    --link-visited:   #6622aa;
-    --shadow:         rgba(0, 60, 140, 0.28);
+    /* ── content / text ── */
+    --content-bg:   rgba(255, 255, 255, 0.93);
+    --text:         #0a1628;
+    --link:         #0044cc;
+    --link-visited: #5500aa;
 }
 
 /* ── RESET ── */
-*, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 /* ── BASE ── */
 body {
-    background:
-        radial-gradient(ellipse at 15% 0%,
-            rgba(255, 255, 255, 0.35) 0%,
-            transparent 55%),
-        linear-gradient(170deg, var(--sky-top) 0%, var(--sky-bottom) 100%);
+    background: linear-gradient(170deg, var(--sky-top) 0%, var(--sky-bottom) 100%);
     font-family: "Segoe UI", Calibri, Tahoma, Arial, sans-serif;
     font-size: 13px;
     color: var(--text);
     min-height: 100vh;
+    padding-bottom: 56px;   /* room for taskbar */
 }
 
-/* ── DESKTOP CANVAS ── */
+/* ══════════════════════════════════════════════
+   DESKTOP CANVAS
+   ══════════════════════════════════════════════ */
 .desktop {
     position: relative;
     width: 880px;
@@ -57,52 +51,61 @@ body {
     margin: 30px auto 50px;
 }
 
-/* ── WINDOW — frosted glass card ── */
+/* ══════════════════════════════════════════════
+   WINDOW  — aero_tile.css
+   ══════════════════════════════════════════════ */
 .window {
     position: absolute;
-    border-radius: 10px;
-    border: 1px solid var(--window-border);
-    background: var(--window-glass);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    border-radius: 15px;
+    border: 1px solid var(--tile-border);
+    /* Blue → cyan gradient from aero_tile.css Rectangle 1 */
+    background: linear-gradient(180deg, var(--tile-top) 50.48%, var(--tile-bottom) 100%);
+    /* Inner edge shadows from aero_tile.css Mask group */
     box-shadow:
-        0 8px 32px var(--shadow),
-        inset 0 1px 0 rgba(255, 255, 255, 0.95);
-    overflow: hidden;
+        inset 0px -4px 0px rgba(0, 0, 0, 0.25),
+        inset 0px  4px 0px rgba(255, 255, 255, 0.25),
+        0px 8px 20px rgba(0, 0, 0, 0.35);
+    overflow: hidden;   /* clips the gloss ellipse and content to border-radius */
 }
 
-/* Top-of-glass shine */
+/* Glossy ellipse overlay — aero_tile.css "Ellipse 1"
+   Placed on the top half of each window; fades to near-transparent.
+   z-index 1 keeps it under the titlebar text and content. */
 .window::before {
     content: '';
     position: absolute;
-    inset: 0 0 50% 0;
+    top: -20%;
+    left: -20%;
+    width: 140%;
+    height: 65%;
     background: linear-gradient(180deg,
-        rgba(255, 255, 255, 0.22) 0%,
-        rgba(255, 255, 255, 0.00) 100%);
+        var(--gloss-hi) 23.46%,
+        var(--gloss-lo) 100%
+    );
+    border-radius: 50%;
     pointer-events: none;
     z-index: 1;
-    border-radius: 10px 10px 0 0;
 }
 
-/* ── TITLE BAR — Aero gloss ── */
+/* ══════════════════════════════════════════════
+   TITLE BAR
+   Transparent so the blue gradient + gloss show through.
+   z-index 2 keeps text/buttons above the ellipse (z-index 1).
+   ══════════════════════════════════════════════ */
 .titlebar {
-    height: 28px;
-    background: linear-gradient(180deg,
-        var(--bar-hi)     0%,
-        var(--bar-mid-hi) 49%,
-        var(--bar-mid-lo) 51%,
-        var(--bar-lo)     100%);
-    color: var(--title-text);
+    position: relative;
+    z-index: 2;
+    height: 30px;
+    background: transparent;
+    color: #ffffff;
     font-size: 12px;
-    font-weight: 600;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65);
     padding: 0 6px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     user-select: none;
-    position: relative;
-    z-index: 2;
 }
 
 .titlebar > span {
@@ -113,106 +116,93 @@ body {
     white-space: nowrap;
 }
 
-.titlebar-icon {
-    font-size: 14px;
-    line-height: 1;
-    flex-shrink: 0;
-}
+.titlebar-icon { font-size: 14px; line-height: 1; flex-shrink: 0; }
 
-/* Thin separator between titlebar and content */
 .window-sep {
+    position: relative;
+    z-index: 2;
     height: 1px;
-    background: linear-gradient(90deg,
-        transparent,
-        rgba(255, 255, 255, 0.65) 20%,
-        rgba(255, 255, 255, 0.65) 80%,
-        transparent);
+    background: rgba(0, 0, 0, 0.2);
 }
 
-/* ── TITLEBAR BUTTONS — glossy pill ── */
-.titlebar-buttons {
-    display: flex;
-    gap: 4px;
-    flex-shrink: 0;
-    margin-left: 6px;
-}
+/* ══════════════════════════════════════════════
+   TITLEBAR BUTTONS — aero_button.css (scaled down)
+   ══════════════════════════════════════════════ */
+.titlebar-buttons { display: flex; gap: 4px; flex-shrink: 0; margin-left: 6px; }
 
 .titlebar-buttons button {
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 16px;
     font-size: 9px;
     font-family: inherit;
     font-weight: bold;
-    color: #1a3a50;
-    border-radius: 4px;
-    border: 1px solid rgba(0, 0, 0, 0.18);
-    background: linear-gradient(180deg,
-        rgba(255, 255, 255, 0.95) 0%,
-        rgba(195, 228, 255, 0.80) 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
     padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+    /* aero_button.css — normal state */
+    background: linear-gradient(180deg, var(--btn-top) 0%, var(--btn-mid) 50%, var(--btn-bot) 100%);
     box-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.22),
-        inset 0 1px 0 rgba(255, 255, 255, 0.85);
-    transition: background 0.1s;
+        0px 4px 6px rgba(0, 0, 0, 0.30),
+        inset 0px -2px 1px rgba(0,   0,   0,   0.4),
+        inset 0px  2px 1px rgba(255, 255, 255, 0.3);
+    transition: filter 0.1s;
 }
 
-.titlebar-buttons button:hover {
-    background: linear-gradient(180deg,
-        #ffffff 0%,
-        rgba(170, 215, 255, 0.95) 100%);
-}
+.titlebar-buttons button:hover  { filter: brightness(1.25); }
 
+/* aero_button_pressed_in.css — inset values drop from 2px to 1px */
 .titlebar-buttons button:active {
-    background: linear-gradient(180deg,
-        rgba(170, 215, 255, 0.9) 0%,
-        rgba(255, 255, 255, 0.7) 100%);
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow:
+        0px 4px 6px rgba(0, 0, 0, 0.30),
+        inset 0px -1px 1px rgba(0,   0,   0,   0.4),
+        inset 0px  1px 1px rgba(255, 255, 255, 0.3);
+    filter: brightness(0.85);
 }
 
-/* ── CONTENT ── */
+/* ══════════════════════════════════════════════
+   CONTENT
+   Opaque white so it covers the blue gradient + gloss below.
+   z-index 2 to sit above the ::before ellipse.
+   ══════════════════════════════════════════════ */
 .content {
+    position: relative;
+    z-index: 2;
     background: var(--content-bg);
     padding: 10px 12px;
-    position: relative;
-    z-index: 0;
+    border-radius: 0 0 13px 13px;
 }
 
-.content p {
-    line-height: 1.65;
-    margin-bottom: 6px;
-}
+.content p             { line-height: 1.65; margin-bottom: 6px; }
+.content p:last-child  { margin-bottom: 0; }
+.content ul            { padding-left: 18px; list-style-type: disc; }
+.content li            { line-height: 1.7; }
+.content a             { color: var(--link); }
+.content a:visited     { color: var(--link-visited); }
+.content del           { color: #888; }
 
-.content p:last-child { margin-bottom: 0; }
-
-.content ul {
-    padding-left: 18px;
-    list-style-type: disc;
-}
-
-.content li { line-height: 1.7; }
-
-.content a           { color: var(--link); }
-.content a:visited   { color: var(--link-visited); }
-.content del         { color: #888; }
-
-/* ── SPOILER ── */
-.spoiler-text {
-    color: #ffffff;   /* matches white content background */
-}
-
+/* ══════════════════════════════════════════════
+   SPOILER
+   White text on near-white background = invisible.
+   Revealed in Aero cyan on selection.
+   ══════════════════════════════════════════════ */
+.spoiler-text { color: #ffffff; }
 .spoiler-text::selection {
     color: var(--text);
-    background-color: #56b6e8;   /* Aero blue reveal */
+    background-color: #00D9FF;
 }
 
-/* ══════════════════════════════
-   MOBILE  (≤ 900px)
-   ══════════════════════════════ */
+/* ══════════════════════════════════════════════
+   MOBILE
+   ══════════════════════════════════════════════ */
 @media (max-width: 900px) {
+    body { padding-bottom: 0; }
+
     .desktop {
         position: static;
         width: 100%;
@@ -228,4 +218,6 @@ body {
         position: static;
         width: 100% !important;
     }
+
+    .taskbar { display: none; }
 }

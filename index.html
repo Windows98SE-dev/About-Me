@@ -47,7 +47,7 @@
     </div>
 
 
-    <div class="window" style="top:175px; left:410px; width:445px;">
+    <div class="window" style="top:193.5px; left:410px; width:445px;">
         <div class="titlebar">
             <span><span class="titlebar-icon">🎓</span> Studies</span>
             <div class="titlebar-buttons">
@@ -67,7 +67,7 @@
     </div>
 
 
-    <div class="window" style="top:370px; left:20px; width:370px;">
+    <div class="window" style="top:454.1px; left:20px; width:370px;">
         <div class="titlebar">
             <span><span class="titlebar-icon">🎮</span> Games I Play</span>
             <div class="titlebar-buttons">
@@ -83,7 +83,7 @@
     </div>
 
 
-    <div class="window" style="top:100px; left:20px; width:370px;">
+    <div class="window" style="top:125.9px; left:20px; width:370px;">
         <div class="titlebar">
             <span><span class="titlebar-icon">🎵</span> Genres I Listen To</span>
             <div class="titlebar-buttons">
@@ -111,7 +111,7 @@
     </div>
 
 
-    <div class="window" style="top:350px; left:410px; width:445px;">
+    <div class="window" style="top:377.05px; left:410px; width:445px;">
         <div class="titlebar">
             <span><span class="titlebar-icon">🔧</span> Things I Made</span>
             <div class="titlebar-buttons">
@@ -123,19 +123,19 @@
         <div class="window-sep"></div>
         <div class="content">
             <ul>
-                <li>This page</li>
+                <li>This website: <a href="https://github.com/Windows98SE-dev/About-Me">https://github.com/Windows98SE-dev/About-Me</a></li>
                 <li>View my heartrate: <a href="https://hrm.modlib.ch" target="_blank">hrm.modlib.ch</a></li>
             </ul>
         </div>
     </div>
 
 
-    <div class="window" style="top:460px; left:20px; width:370px;">
+    <div class="window" style="top:560px; left:20px; width:370px;">
         <div class="titlebar">
             <span><span class="titlebar-icon">🔗</span> Various Links</span>
             <div class="titlebar-buttons">
                 <button title="Minimize">_</button>
-                <button title="Maximize">□</button>
+                <button class="" title="Maximize">□</button>
                 <button title="Close">✕</button>
             </div>
         </div>
@@ -146,10 +146,61 @@
                 <li>Steam: <a href="https://steamcommunity.com/id/WindowsXPSP2" target="_blank">steamcommunity.com/id/WindowsXPSP2</a></li>
                 <li>Spotify: <a href="https://open.spotify.com/user/wjyshrzblkniellxv6lrrbiyh?si=6a4f4c87ece645ee" target="_blank">open.spotify.com/user/wjyshrzblkniellxv6lrrbiyh</a></li>
                 <li>GitHub: <a href="https://github.com/Windows98SE-dev" target="_blank">github.com/Windows98SE-dev</a></li>
+                <li>The Furtiger Aero Archive (CSS Tutorials): <a href="https://frutiger-aero.neocities.org">https://frutiger-aero.neocities.org</a></li>
             </ul>
+        </div>
+    </div>
+
+    <div class="window" style="top:484.25px; left: 410px; width: 370px;">
+        <div class="titlebar">
+            <span><span class="titlebar-icon">✉️</span> Say something!</span>
+            <div class="titlebar-buttons">
+                <button title="Minimize">_</button>
+                <button class="" title="Maximize">□</button>
+                <button title="Close">✕</button>
+            </div>
+        </div>
+        <div class="window-sep"></div>
+        <div class="content">
+            <form id="messageForm">
+                <input type="text" name="author" placeholder="Your name (You can put anything!)" required style="width:100%; padding:5px; margin-bottom:10px;">
+                <textarea name="message" placeholder="Your message" required style="width:100%; padding:5px; min-height:60px; margin-bottom:10px;"></textarea>
+                <button type="submit" style="padding:5px 10px; cursor:pointer;">Send</button>
+            </form>
+            <div id="messageStatus"></div>
         </div>
     </div>
 
 </div>
 </body>
 </html>
+
+<script>
+document.getElementById('messageForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const statusDiv = document.getElementById('messageStatus');
+    
+    try {
+        const response = await fetch('send-message.php', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+            statusDiv.textContent = '✓ Message sent!';
+            statusDiv.style.color = 'green';
+            e.target.reset();
+        } else {
+            statusDiv.textContent = '✗ ' + result.error;
+            statusDiv.style.color = 'red';
+        }
+    } catch (error) {
+        statusDiv.textContent = '✗ Network error';
+        statusDiv.style.color = 'red';
+    }
+});
+</script>
