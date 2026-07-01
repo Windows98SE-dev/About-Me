@@ -187,19 +187,28 @@ document.getElementById('messageForm').addEventListener('submit', async (e) => {
             method: 'POST',
             body: formData
         });
-        
-        const result = await response.json();
+
+        const responseText = await response.text();
+        let result = {};
+
+        if (responseText) {
+            try {
+                result = JSON.parse(responseText);
+            } catch (parseError) {
+                result = { error: responseText };
+            }
+        }
         
         if (response.ok) {
             statusDiv.textContent = '✓ Message sent!';
             statusDiv.style.color = 'green';
             e.target.reset();
         } else {
-            statusDiv.textContent = '✗ ' + result.error;
+            statusDiv.textContent = '✗ ' + (result.error || 'Unknown server error');
             statusDiv.style.color = 'red';
         }
     } catch (error) {
-        statusDiv.textContent = '✗ Network error';
+        statusDiv.textContent = '✗ ' + error.message;
         statusDiv.style.color = 'red';
     }
 });
