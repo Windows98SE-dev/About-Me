@@ -16,7 +16,7 @@ if ($message === '') {
     exit;
 }
 
-$webhook_url = 'https://discord.com/api/webhooks/1521847871073288344/hSgnISUq73rOk5mTgbiSpRCy9djDOv7uoS9Ohkw_0i89GSUy4stjLjruM8u3ei21sg2o';
+$webhook_url = 'https://discord.com/api/webhooks/YOUR_WEBHOOK';
 
 $payload = json_encode([
     'content' => "**From:** {$author}\n**Message:** {$message}"
