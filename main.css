@@ -225,3 +225,85 @@ body {
 textarea {
   resize: horizontal;
 }
+
+.theme-toggle {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    z-index: 1000;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    font-size: 18px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.15s, background 0.2s;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.08);
+}
+
+/* ══════════════════════════════════════════════
+   DARK MODE
+   ══════════════════════════════════════════════ */
+:root[data-theme="dark"] {
+    --tile-top:    #162a56;
+    --tile-bottom: #00527b;
+    --tile-border: rgba(255, 255, 255, 0.18);
+    --gloss-hi:    rgba(255, 255, 255, 0.28);
+    --gloss-lo:    rgba(0, 0, 0, 0.15);
+
+    --sky-top:     #0b1626;
+    --sky-bottom:  #030712;
+
+    --content-bg:   rgba(18, 26, 43, 0.93);
+    --text:         #e2edff;
+    --link:         #4ea1ff;
+    --link-visited: #b392f0;
+}
+
+/* Also apply if user prefers dark mode and hasn't explicitly chosen light */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --tile-top:    #162a56;
+        --tile-bottom: #00527b;
+        --tile-border: rgba(255, 255, 255, 0.18);
+        --gloss-hi:    rgba(255, 255, 255, 0.28);
+        --gloss-lo:    rgba(0, 0, 0, 0.15);
+
+        --sky-top:     #0b1626;
+        --sky-bottom:  #030712;
+
+        --content-bg:   rgba(18, 26, 43, 0.93);
+        --text:         #e2edff;
+        --link:         #4ea1ff;
+        --link-visited: #b392f0;
+    }
+}
+
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] textarea {
+    background: rgba(10, 15, 26, 0.85);
+    color: var(--text);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+[data-theme="dark"] form button[type="submit"] {
+    background: linear-gradient(180deg, #2b3b55 0%, #17243b 100%);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+[data-theme="dark"] .window-sep {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme="dark"] .spoiler-text {
+    color: var(--content-bg);
+}

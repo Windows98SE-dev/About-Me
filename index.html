@@ -8,7 +8,9 @@
 </head>
 <body>
 <div class="desktop">
-
+    <button id="themeToggle" class="theme-toggle" title="Toggle Dark/Light Mode">
+        🌙
+    </button>
     <div class="window" style="top:20px; left:20px; width:370px;">
         <div class="titlebar">
             <span><span class="titlebar-icon">📄</span> About Me</span>
@@ -41,7 +43,7 @@
                 <li>Age: 17</li>
                 <li>Nationality: Swiss</li>
                 <li>Work status: Apprenticeship</li>
-                <li>Relationship status: That's not your business! (Single)</li>
+                <li>Relationship status: That's not your business! (Single)</li> <!-- Why did I even add this ? -->
             </ul>
         </div>
     </div>
@@ -66,23 +68,6 @@
         </div>
     </div>
 
-
-    <div class="window" style="top:454.1px; left:20px; width:370px;">
-        <div class="titlebar">
-            <span><span class="titlebar-icon">🎮</span> Games I Play</span>
-            <div class="titlebar-buttons">
-                <button title="Minimize">_</button>
-                <button title="Maximize">□</button>
-                <button title="Close">✕</button>
-            </div>
-        </div>
-        <div class="window-sep"></div>
-        <div class="content">
-            <p>WIP: I don't know if I'll add it here, make another page or put a link to a service such as Backloggd</p>
-        </div>
-    </div>
-
-
     <div class="window" style="top:125.9px; left:20px; width:370px;">
         <div class="titlebar">
             <span><span class="titlebar-icon">🎵</span> Genres I Listen To</span>
@@ -97,19 +82,19 @@
             <ul>
                 <li>Metal</li>
                 <li>Nu-Metal</li>
-                <li>Alternative Metal (Master Boot Record my beloved)</li>
+                <li>Electronic Metal</li>
                 <li>Rock</li>
+                <li>EDM</li>
                 <li>Vocaloid (I need to add more to my playlist)</li>
                 <li>J-Pop</li>
                 <li>City-Pop</li>
                 <li>K-Pop (Rarely, only got 1 song in my playlist I think)</li>
-                <li>Soundtracks (Video Game, Movie, Anime, you name it.)</li>
-                <li>Your Generic Pop</li>
+                <li>Soundtracks (Video Game, Movie, Anime, you name it)</li>
+                <li>Pop.</li>
                 <li>White Girl Music</li>
             </ul>
         </div>
     </div>
-
 
     <div class="window" style="top:377.05px; left:410px; width:445px;">
         <div class="titlebar">
@@ -130,7 +115,7 @@
     </div>
 
 
-    <div class="window" style="top:560px; left:20px; width:370px;">
+    <div class="window" style="top:454.1px; left:20px; width:370px;">
         <div class="titlebar">
             <span><span class="titlebar-icon">🔗</span> Various Links</span>
             <div class="titlebar-buttons">
@@ -146,7 +131,8 @@
                 <li>Steam: <a href="https://steamcommunity.com/id/WindowsXPSP2" target="_blank">steamcommunity.com/id/WindowsXPSP2</a></li>
                 <li>Spotify: <a href="https://open.spotify.com/user/wjyshrzblkniellxv6lrrbiyh?si=6a4f4c87ece645ee" target="_blank">open.spotify.com/user/wjyshrzblkniellxv6lrrbiyh</a></li>
                 <li>GitHub: <a href="https://github.com/Windows98SE-dev" target="_blank">github.com/Windows98SE-dev</a></li>
-                <li>The Furtiger Aero Archive (CSS Tutorials): <a href="https://frutiger-aero.neocities.org">https://frutiger-aero.neocities.org</a></li>
+                <li>Email (I guess): <a href="mailto:w98se-dev@pm.me">w98se-dev@pm.me</a></li>
+                <li>The Furtiger Aero Archive (Helped me for the design): <a href="https://frutiger-aero.neocities.org">https://frutiger-aero.neocities.org</a></li>
             </ul>
         </div>
     </div>
@@ -172,6 +158,27 @@
     </div>
 
 </div>
+<script>
+const themeToggle = document.getElementById('themeToggle');
+const root = document.documentElement;
+
+const savedTheme = localStorage.getItem('theme');
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+
+root.setAttribute('data-theme', initialTheme);
+themeToggle.textContent = initialTheme === 'dark' ? '☀️' : '🌙';
+
+
+themeToggle.addEventListener('click', () => {
+    const currentTheme = root.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+    root.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+});
+</script>
 </body>
 </html>
 
